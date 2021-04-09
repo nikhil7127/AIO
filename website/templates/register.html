@@ -1,0 +1,165 @@
+{% extends 'base.html' %} {%block title%}Register{%endblock%} {%block content%}
+<div class="container">
+  <div style="margin-top: 2rem"></div>
+  <form method="POST">
+    <div class="form-group">
+      <label for="userName" class="form-label">User name</label>
+      <input type="text" id="UserName" name="username" required />
+    </div>
+    <div class="form-group">
+      <label for="email" class="form-label">Email Address</label>
+      <input type="text" id="email" name="email" required />
+    </div>
+    <div class="form-group" id="password-group">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}"
+        id="password"
+        name="password"
+        required
+      />
+      <div
+        class="form-group row"
+        id="passwordChecking"
+        style="margin-top: 10px; margin-bottom: 0px"
+      >
+        <div
+          style="font-size: 0.9rem"
+          class="col-sm text-danger"
+          id="uppercase"
+        >
+          A uppercase letter
+        </div>
+        <div
+          style="font-size: 0.9rem"
+          class="col-sm text-danger"
+          id="lowercase"
+        >
+          A lowercase letter
+        </div>
+        <div style="font-size: 0.9rem" class="col-sm text-danger" id="symbol">
+          A symbol
+        </div>
+        <div style="font-size: 0.9rem" class="col-sm text-danger" id="number">
+          A number
+        </div>
+        <div style="font-size: 0.9rem" class="col-sm text-danger" id="count8">
+          Atleast 8 characters
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirm" class="form-label">Re-enter password</label>
+      <input type="password" id="confirm" name="confirm" required />
+    </div>
+    <button type="submit" class="btn btn-dark disabled" id="submitButton">
+      submit
+    </button>
+  </form>
+</div>
+<script>
+  const userName = document.getElementById("UserName");
+  const email = document.getElementById("email");
+  const password = document.getElementById("password");
+  const confirm = document.getElementById("confirm");
+  const button = document.getElementById("submitButton");
+  const password_group = document.getElementById("password-group");
+  const passwordChecking = document.getElementById("passwordChecking");
+  const capital = document.getElementById("uppercase");
+  const lower = document.getElementById("lowercase");
+  const number = document.getElementById("number");
+  const symbol = document.getElementById("symbol");
+  const count = document.getElementById("count8");
+
+  password_group.removeChild(passwordChecking);
+
+  password.addEventListener("keyup", function () {
+    let pass = this.value;
+    if (
+      /[A-Z]/.test(pass) &&
+      /[a-z]/.test(pass) &&
+      /[0-9]/.test(pass) &&
+      /[!@#$%^&*]/.test(pass) &&
+      pass.length > 7
+    ) {
+      if (password_group.children.length == 3) {
+        password_group.removeChild(passwordChecking);
+      }
+    } else {
+      password_group.appendChild(passwordChecking);
+    }
+    function conditionCheck(condition, value) {
+      if (condition.test(pass)) {
+        value.classList.add("text-success");
+        value.classList.remove("text-danger");
+      } else {
+        value.classList.remove("text-success");
+        value.classList.add("text-danger");
+      }
+    }
+    conditionCheck(/[A-Z]/, capital);
+    conditionCheck(/[a-z]/, lower);
+    conditionCheck(/[0-9]/, number);
+    conditionCheck(/[!@#$%^&*]/, symbol);
+    if (pass.length > 7 && pass.length < 21) {
+      count.classList.add("text-success");
+      count.classList.remove("text-danger");
+    } else {
+      count.classList.remove("text-success");
+      count.classList.add("text-danger");
+    }
+  });
+
+  userName.addEventListener("keyup", function () {
+    let data = this.value;
+    if (data.length > 6) {
+      this.classList.add("border-success");
+      this.classList.remove("border-danger");
+    } else {
+      this.classList.add("border-danger");
+      this.classList.remove("border-success");
+    }
+  });
+
+  email.addEventListener("keyup", function () {
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        this.value.trim()
+      )
+    ) {
+      this.classList.add("border-success");
+      this.classList.remove("border-danger");
+    } else {
+      this.classList.add("border-danger");
+      this.classList.remove("border-success");
+    }
+  });
+
+  confirm.addEventListener("keyup", function () {
+    if (
+      confirm.value == password.value &&
+      document.getElementsByClassName("text-danger").length == 0
+    ) {
+      this.classList.add("border-success");
+      this.classList.remove("border-danger");
+    } else {
+      this.classList.add("border-danger");
+      this.classList.remove("border-success");
+    }
+  });
+  document.addEventListener("keyup", function () {
+    if (
+      document.getElementsByClassName("border-danger").length == 0 &&
+      document.getElementsByClassName("text-danger").length == 0 &&
+      confirm.value == password.value &&
+      password.value.length > 8
+    ) {
+      button.classList.remove("disabled");
+    } else {
+      button.classList.add("disabled");
+    }
+  });
+</script>
+{%endblock%}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title%}Mail{% endblock%}
+
+{%block content%}
+<div style="margin-top:2rem"></div>
+<div class="container">
+    <form method="post">
+        <div class="mb-3">
+            <label for="sender" class="form-label"> Sender Email address</label>
+            <input type="email" id="sender" aria-describedby="emailHelp(sender)" required
+                   name="senderMail">
+            <div id="emailHelp(sender)" class="form-text">We'll never share your email with anyone else.</div>
+        </div>
+        <div class="mb-3">
+            <label for="senderPassword" class="form-label">Sender Password</label>
+            <input type="password" id="senderPassword" required name="senderPassword">
+        </div>
+        <div class="mb-3">
+            <label for="receiver" class="form-label"> Receiver(s) Email address</label>
+            <input type="text" id="receiver" aria-describedby="emailHelp(receiver)" required
+                   name="receivers">
+            <div id="emailHelp(receiver)" class="form-text">For multiple emails separate by ";"</div>
+        </div>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" id="subject" aria-describedby="emailHelp" name="subject">
+        </div>
+
+        <div class="mb-3">
+            <label for="body" class="form-label">Body</label>
+            <textarea id="body" aria-describedby="emailHelp" style="width:100%;height:10rem;padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;" name="body"
+                      required></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <input type="file" id="inputGroupFile01" multiple name="files">
+        </div>
+        <button type="submit" class="btn btn-dark">Send</button>
+        <div style="height:2rem"></div>
+    </form>
+
+</div>
+{%endblock%}
