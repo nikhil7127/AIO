@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\website\auth.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\website\templates\base.html">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\website\templates\codes\mail.py">
           <value>
             <Attribute>

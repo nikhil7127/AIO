@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from .models import UserDetails
 from sqlalchemy import exc
+from flask_login import login_user, logout_user, current_user, login_required
 
 auth = Blueprint("auth", __name__)
 
@@ -17,6 +18,7 @@ def login():
         try:
             if check_password_hash(currentUser.password, password):
                 flash("Logged in successfully", "success")
+                login_user(currentUser,remember=True)
                 return redirect(url_for("views.home"))
             else:
                 flash("Password doesn't match", "error")
@@ -24,8 +26,14 @@ def login():
         except Exception:
             flash("Account doesn't exist", "error")
             return redirect(url_for("auth.login"))
-    return render_template("login.html")
+    return render_template("login.html",presentUser=current_user)
 
+
+@auth.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for("auth.login"))
 
 @auth.route("/register", methods=["GET", "POST"])
 def register():
@@ -36,7 +44,8 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            flash("Account created successfully", "success")
+            login_user(new_user,remember=True)
+            flash("Logged in successfully", "success")
             return redirect(url_for("views.home"))
         except exc.IntegrityError:
             db.session.rollback()
@@ -48,4 +57,4 @@ def register():
                 flash("Account already exists", "error")
             return redirect(url_for("auth.register"))
 
-    return render_template("register.html")
+    return render_template("register.html",presentUser=current_user)
