@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
-from .models import UserDetails
+from .models import User
 from sqlalchemy import exc
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -13,8 +13,7 @@ def login():
     if request.method == "POST":
         userName = request.form.get("email")
         password = request.form.get("password")
-        print(UserDetails.query.all())
-        currentUser = UserDetails.query.filter_by(username=userName).first()
+        currentUser = User.query.filter_by(username=userName).first()
         try:
             if check_password_hash(currentUser.password, password):
                 flash("Logged in successfully", "success")
@@ -39,7 +38,7 @@ def logout():
 def register():
     if request.method == "POST":
         data = request.form
-        new_user = UserDetails(username=data.get("username").strip(), email=data.get("email").strip(),
+        new_user = User(username=data.get("username").strip(), email=data.get("email").strip(),
                                password=generate_password_hash(data.get("password").strip(), method="sha256"))
         try:
             db.session.add(new_user)
@@ -49,9 +48,9 @@ def register():
             return redirect(url_for("views.home"))
         except exc.IntegrityError:
             db.session.rollback()
-            if UserDetails.query.filter_by(username=data.get("username").strip()).first():
+            if User.query.filter_by(username=data.get("username").strip()).first():
                 flash("Username already taken", "error")
-            elif UserDetails.query.filter_by(email=data.get("email").strip()).first():
+            elif User.query.filter_by(email=data.get("email").strip()).first():
                 flash("Email already taken", "error")
             else:
                 flash("Account already exists", "error")

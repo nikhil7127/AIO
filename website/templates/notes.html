@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Notes{% endblock %}
+{% block content %}
+<div class="container">
+    <div style="margin-top: 0.5rem"></div>
+    <div class="row">
+        <div class="fs-3 col-5"></div>
+        <div class="fs-3 col-5">Your Notes</div>
+        <a href="/createNote" class="col-2">
+            <button class="btn btn-dark">Add note
+            </button>
+        </a>
+    </div>
+    <div style="margin-top: 0.5rem"></div>
+
+    {% if notes %}
+    <div class="form-text">Nothing to show! use "Add Notes" to a create notes</div>
+    {% else %}
+    <div class="row">
+        {% for note in presentUser.notes %}
+        <div class="col-4">
+            <div class="card" style="width: 18rem;margin-bottom:10px">
+                <div class="card-body">
+                    <h5 class="card-title">{{note.title}}</h5>
+                    <p class="card-text">
+                        {%if note.content|length > 100%}
+                        {{note.content[:100]}}
+                        {%else%}
+                        {{note.content+"-"*(100-note.content|length)}}
+                        {%endif%}
+                    </p>
+                    <button type="button" class="btn btn-danger col-5" style="padding-left:0px;padding-right:0px"
+                            onclick="deleteNote({{note.id}})">
+                        delete
+                    </button>
+                    {% if note.content|length > 100 %}
+                    <a href="#" class="btn btn-primary col-6" style="padding-left:0px;padding-right:0px">show more</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+</div>
+<script
+        type="text/javascript"
+        src="{{ url_for('static', filename='index.js') }}"
+></script>
+{% endblock %}

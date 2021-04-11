@@ -36,14 +36,15 @@
         }
 
 
+
     </style>
     <title>
         {%block title %}Home{% endblock %}
     </title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Navbar</a>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color:#080714;">
+    <a class="navbar-brand" href="#">Brand</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -54,12 +55,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                     Automation
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu">
                     <a class="dropdown-item" href="/mail">Mail</a>
                     <a class="dropdown-item" href="#">Twitter</a>
                     <a class="dropdown-item" href="#">Instagram</a>
@@ -67,12 +67,12 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Password</a>
+                <a class="nav-link" href="/notes">Notes</a>
             </li>
         </ul>
         {% if presentUser.is_authenticated %}
         <div class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link" href="/logout">{{presentUser.username}}</a>
         </div>
         {% else %}
         <div class="nav-item">
@@ -119,3 +119,4 @@ messages %} {% for category, message in messages %} {% if category ==
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"
 ></script>
+
