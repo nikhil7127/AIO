@@ -1,0 +1,38 @@
+{%extends "base.html"%}
+{%block title%}stack overflow{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div style="margin-top: 0.5rem"></div>
+    <div class="fs-3 col-5">Popular tags</div>
+    <div style="margin-top: 0.5rem"></div>
+
+    <div class="row">
+        {% for tag in tagData %}
+        <div class="col-4">
+            <div class="card" style="width: 18rem;margin-bottom:10px">
+                <div class="card-body">
+                    <h5 class="card-title"><a href={{tag.link}}>{{tag.tagName}}</a></h5>
+                    <p class="card-text">
+                        {{tag.description}}
+                    </p>
+                    <p>
+                        {{tag.quesCount + " questions"}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+<!--    <button class="btn btn-dark" onclick="prev({{pageNo}})">-->
+<!--        previous-->
+<!--    </button>-->
+<!--    <button class="btn btn-dark" onclick="next({{pageNo}})">-->
+<!--        next-->
+<!--    </button>-->
+    <div style="margin-top: 0.5rem"></div>
+
+</div>
+
+{% endblock %}

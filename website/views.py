@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from flask_login import login_required, current_user
 from .models import Note
 from . import db
+from .templates.codes.stackOverFlow.tags import getStackTags
 import json
 
 views = Blueprint("views", __name__)
@@ -11,6 +12,18 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     return render_template("base.html", presentUser=current_user)
+
+
+tempNumber = 1
+
+
+@views.route("/stackoverflow", methods=["POST","GET"])
+@login_required
+def stackOverFlow():
+    if request.method == "POST":
+        note = json.loads(request.data)
+        print(notes["pg"])
+    return render_template("stackOverFlow.html", presentUser=current_user, tagData=getStackTags(tempNumber))
 
 
 @views.route("/notes")

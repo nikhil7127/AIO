@@ -13,8 +13,8 @@
     </div>
     <div style="margin-top: 0.5rem"></div>
 
-    {% if notes %}
-    <div class="form-text">Nothing to show! use "Add Notes" to a create notes</div>
+    {% if presentUser.notes|length == 0 %}
+    <div class="form-text">Nothing to show! use "Add Note" to a create note</div>
     {% else %}
     <div class="row">
         {% for note in presentUser.notes %}
@@ -26,7 +26,7 @@
                         {%if note.content|length > 100%}
                         {{note.content[:100]}}
                         {%else%}
-                        {{note.content+"-"*(100-note.content|length)}}
+                        {{note.content+"-"*(120-note.content|length)}}
                         {%endif%}
                     </p>
                     <button type="button" class="btn btn-danger col-5" style="padding-left:0px;padding-right:0px"
@@ -44,8 +44,5 @@
     {% endif %}
 
 </div>
-<script
-        type="text/javascript"
-        src="{{ url_for('static', filename='index.js') }}"
-></script>
+
 {% endblock %}

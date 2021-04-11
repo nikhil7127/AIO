@@ -37,6 +37,8 @@
 
 
 
+
+
     </style>
     <title>
         {%block title %}Home{% endblock %}
@@ -68,6 +70,15 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/notes">Notes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Calculator</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/stackoverflow">Stack overflow</a>
             </li>
         </ul>
         {% if presentUser.is_authenticated %}
@@ -120,3 +131,7 @@ messages %} {% for category, message in messages %} {% if category ==
         crossorigin="anonymous"
 ></script>
 
+<script
+        type="text/javascript"
+        src="{{ url_for('static', filename='index.js') }}"
+></script>
