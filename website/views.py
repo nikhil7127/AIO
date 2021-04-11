@@ -14,6 +14,7 @@ def home():
 
 
 @views.route("/notes")
+@login_required
 def notes():
     return render_template("notes.html", presentUser=current_user)
 
@@ -54,7 +55,7 @@ def mail():
     return render_template("mail.html", presentUser=current_user)
 
 
-@views.route("/deleteNote", methods=["POST", "GET"])
+@views.route("/deleteNote", methods=["POST"])
 def deleteNote():
     note = json.loads(request.data)
     print(request.data)
