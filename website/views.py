@@ -41,6 +41,7 @@ def link():
     data = json.loads(request.data)
     global hyperlink
     hyperlink = data["link"].split("/")[-1]
+    return hyperlink
 
 
 @views.route("/specific", methods=["POST", "GET"])
