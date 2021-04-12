@@ -38,6 +38,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\website\templates\codes\stackOverFlow\mainTag.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\website\templates\mail.html">
           <value>
             <Attribute>

@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Note
 from . import db
 from .templates.codes.stackOverFlow.tags import getStackTags
+from .templates.codes.stackOverFlow.mainTag import mainTags
 import json
 
 views = Blueprint("views", __name__)
@@ -14,16 +15,38 @@ def home():
     return render_template("base.html", presentUser=current_user)
 
 
-tempNumber = 1
+temp = 1
 
 
-@views.route("/stackoverflow", methods=["POST","GET"])
+@views.route("/stackoverflow", methods=["POST", "GET"])
 @login_required
 def stackOverFlow():
     if request.method == "POST":
         note = json.loads(request.data)
-        print(notes["pg"])
-    return render_template("stackOverFlow.html", presentUser=current_user, tagData=getStackTags(tempNumber))
+        global temp
+        temp = note["pg"]
+        return render_template("stackOverFlow.html", presentUser=current_user, tagData=getStackTags(temp),
+                               pageNo=temp)
+
+    else:
+        return render_template("stackOverFlow.html", presentUser=current_user, tagData=getStackTags(temp),
+                               pageNo=temp)
+
+
+hyperlink = ""
+
+
+@views.route("/link", methods=["POST"])
+def link():
+    data = json.loads(request.data)
+    global hyperlink
+    hyperlink = data["link"].split("/")[-1]
+
+
+@views.route("/specific", methods=["POST", "GET"])
+def mainTag():
+    global hyperlink
+    return render_template("stackOverFlowSpecific.html", presentUser=current_user, data=mainTags(hyperlink))
 
 
 @views.route("/notes")
